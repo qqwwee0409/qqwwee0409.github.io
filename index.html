@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Snippets</title>
+  <style>
+    /*
+    body {
+       font-family: sans-serif;
+      margin: 1em;
+    }
+    */
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      /*margin-bottom: 0.5em; */
+    }
+  </style>
+</head>
+<body>
+  <div class="row">
+  <label>Language:
+    <select id="lang">
+      <option value="ja" selected>ja</option>
+      <option value="en">en</option>
+    </select>
+  </label>
+  <label>User:
+    <input type="text" id="username" value="" placeholder="e.g. alice">
+  </label>
+  </div>
+  <div>
+    <label>Wikipedia:
+      <input type="text" id="kw_wikipedia" placeholder="e.g. sandbox">
+      <button onclick="goToUserPage('wikipedia')">go</button>
+      <button onclick="goToPrefix('wikipedia')">with user</button>
+    </label>
+  </div>
+  <div>
+    <label>Wiktionary:
+      <input type="text" id="kw_wiktionary" placeholder="e.g. draft">
+      <button onclick="goToUserPage('wiktionary')">go</button>
+      <button onclick="goToPrefix('wiktionary')">with user</button>
+    </label>
+  </div>
+  <div>
+    <label>Wikiquote:
+      <input type="text" id="kw_wikiquote" placeholder="e.g. draft">
+      <button onclick="goToUserPage('wikiquote')">go</button>
+      <button onclick="goToPrefix('wikiquote')">with user</button>
+    </label>
+  </div>
+  <div>
+    <label>Wikisource:
+      <input type="text" id="kw_wikisource" placeholder="e.g. poems">
+      <button onclick="goToUserPage('wikisource')">go</button>
+      <button onclick="goToPrefix('wikisource')">with user</button>
+    </label>
+  </div>
+  <div>
+  <label>Logeion:
+    <input type="text" id="kw_logeion" placeholder="e.g. λόγος">
+    <button onclick="searchLogeion()">go</button>
+  </label>
+  </div>
+  <div>
+    <label>WEB言海:
+      <input type="text" id="kw_genkai" placeholder="e.g. やま">
+      <button onclick="searchGenkai()">go</button>
+    </label>
+  </div>
+  <div>
+    <label>ctext:
+      <input type="text" id="kw_ctext" placeholder="e.g. 忠告">
+      <button onclick="searchCtext()">ctext</button>
+      <button onclick="searchMoe()">moe</button>
+    </label>
+  </div>
+  <div>
+    <label>Webster1913:
+      <input type="text" id="kw_webster1913" placeholder="e.g. abash">
+      <button onclick="searchWebster1913()">go</button>
+    </label>
+  </div>
+  <div>
+    <label>CNRTL:
+      <input type="text" id="kw_cnrtl" placeholder="e.g. lumiere">
+      <button onclick="searchCnrtl()">go</button>
+    </label>
+  </div>
+  <div>
+    <label>DWDS:
+      <input type="text" id="kw_dwds" placeholder="e.g. worterbuch">
+      <button onclick="searchDwds()">go</button>
+    </label>
+  </div>
+  <script>
+    function getLang() {
+      return document.getElementById('lang').value;
+    }
+
+    function goToUserPage(project) {
+      const lang = getLang();
+      const user = document.getElementById("username").value.trim();
+      const kw = document.getElementById("kw_" + project).value.trim();
+      localStorage.setItem("kw_" + project, kw);
+      const base = `https://${lang}.${project}.org/wiki/`;
+      const url = user ? `${base}User:${encodeURIComponent(user)}/${encodeURIComponent(kw)}` : `${base}${encodeURIComponent(kw)}`;
+      if (kw) window.open(url, "_blank");
+    }
+
+    function goToPrefix(project) {
+      const lang = getLang();
+      const user = document.getElementById("username").value.trim();
+      if (!user) return;
+      const url = `https://${lang}.${project}.org/wiki/Special:PrefixIndex/User:${encodeURIComponent(user)}`;
+      window.open(url, "_blank");
+    }
+
+    function searchLogeion() {
+      const word = document.getElementById("kw_logeion").value.trim();
+      if (!word) return;
+      const url = `https://logeion.uchicago.edu/${word}`;
+      window.open(url, "_blank");
+    }
+
+    function searchGenkai() {
+      const keyword = document.getElementById("kw_genkai").value.trim();
+      if (!keyword) return;
+
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = "https://www.babelbible.net/genkai/genkai.cgi";
+      form.target = "_blank";
+
+      const inputs = {
+        mode: "right",
+        noexpand: "0",
+        tenukikw: keyword
+      };
+
+      for (const [name, value] of Object.entries(inputs)) {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = name;
+        input.value = value;
+        form.appendChild(input);
+      }
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
+    }
+   
+    function searchCtext() {
+      const word = document.getElementById("kw_ctext").value.trim();
+      if (!word) return;
+      const url = `https://ctext.org/dictionary.pl?if=gb&char=${word}`;
+      window.open(url, "_blank");
+    }
+   
+    function searchMoe() {
+      const word = document.getElementById("kw_ctext").value.trim();
+      if (!word) return;
+      const url = `https://dict.revised.moe.edu.tw/search.jsp?word=${word}`;
+      window.open(url, "_blank");
+    }
+    function searchWebster1913() {
+      const word = document.getElementById("kw_webster1913").value.trim();
+      if (!word) return;
+      const url = `https://www.websters1913.com/words/${word}`;
+      window.open(url, "_blank");
+    }
+
+    function searchCnrtl() {
+      const word = document.getElementById("kw_cnrtl").value.trim();
+      if (!word) return;
+      const url = `https://www.cnrtl.fr/definition/${word}`;
+      window.open(url, "_blank");
+    }
+
+    function searchDwds() {
+      const word = document.getElementById("kw_dwds").value.trim();
+      if (!word) return;
+      const url = `https://www.dwds.de/wb/${word}`;
+      window.open(url, "_blank");
+    }
+
+    window.onload = function () {
+      const savedUser = localStorage.getItem("username");
+      if (savedUser) {
+        document.getElementById("username").value = savedUser;
+      }
+
+      document.getElementById("username").addEventListener("input", function () {
+        localStorage.setItem("username", this.value.trim());
+      });
+    };
+  </script>
+</body>
+</html>
+
