@@ -10,7 +10,9 @@
       margin: 1em;
     }
     */
-
+    input[type="text"] {
+      width: 300px;
+    }
     .row {
       display: flex;
       align-items: center;
@@ -30,6 +32,13 @@
   <label>User:
     <input type="text" id="username" value="" placeholder="e.g. alice">
   </label>
+  </div>
+  <div>
+    <label>Wikimedia:
+      <input type="text" id="kw_wikimedia" placeholder="e.g. sandbox">
+      <button onclick="goToFilePage()">file</button>
+      <button onclick="goToIndexPage('wikipedia')">index</button>
+    </label>
   </div>
   <div>
     <label>Wikipedia:
@@ -100,7 +109,18 @@
     function getLang() {
       return document.getElementById('lang').value;
     }
-
+    function goToFilePage() {
+      const word = document.getElementById("kw_wikimedia").value.trim();
+      if (!word) return;
+      const url = `https://commons.wikimedia.org/wiki/File:${word}`;
+      window.open(url, "_blank");
+    }
+    function goToIndexPage() {
+      const word = document.getElementById("kw_wikimedia").value.trim();
+      if (!word) return;
+      const url = `https://ja.wikisource.org/wiki/Index:${word}`;
+      window.open(url, "_blank");
+    }
     function goToUserPage(project) {
       const lang = getLang();
       const user = document.getElementById("username").value.trim();
