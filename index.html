@@ -69,6 +69,12 @@
     </label>
   </div>
   <div>
+  <label>Ia:
+    <input type="text" id="kw_ia" placeholder="">
+    <button onclick="searchIa()">go</button>
+  </label>
+  </div>
+  <div>
   <label>Logeion:
     <input type="text" id="kw_logeion" placeholder="e.g. λόγος">
     <button onclick="searchLogeion()">go</button>
@@ -138,7 +144,12 @@
       const url = `https://${lang}.${project}.org/wiki/Special:PrefixIndex/User:${encodeURIComponent(user)}`;
       window.open(url, "_blank");
     }
-
+    function searchIa() {
+      const word = document.getElementById("kw_ia").value.trim();
+      if (!word) return;
+      const url = `https://archive.org/details/${word}`;
+      window.open(url, "_blank");
+    }
     function searchLogeion() {
       const word = document.getElementById("kw_logeion").value.trim();
       if (!word) return;
