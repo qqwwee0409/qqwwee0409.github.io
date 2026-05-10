@@ -111,6 +111,15 @@
       <button onclick="searchDwds()">go</button>
     </label>
   </div>
+  <div>
+    <label>Unicode:
+      <input type="text" id="kw_unicode" placeholder="e.g. u2ee22">
+      <button onclick="searchUnicode()">go</button>
+    </label>
+    <a href="https://www.unicode.org/charts/PDF/U2CEB0.pdf">拡張F</a>
+    <a href="https://www.unicode.org/charts/PDF/U30000.pdf">拡張G</a>
+    <a href="https://www.unicode.org/charts/PDF/U31350.pdf">拡張H</a>
+  </div>
   <script>
     function getLang() {
       return document.getElementById('lang').value;
@@ -218,6 +227,12 @@
       window.open(url, "_blank");
     }
 
+    function searchUnicode() {
+      const word = document.getElementById("kw_unicode").value.trim();
+      if (!word) return;
+      const url = `https://glyphwiki.org/wiki/${word}`;
+      window.open(url, "_blank");
+    }
     window.onload = function () {
       const savedUser = localStorage.getItem("username");
       if (savedUser) {
