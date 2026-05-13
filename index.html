@@ -118,6 +118,12 @@
     </label>
   </div>
   <div>
+    <label>コトバンク:
+      <input type="text" id="kw_ktb" placeholder="e.g. 灸">
+      <button onclick="searchKtb()">go</button>
+    </label>
+  </div>
+  <div>
     <label>Unicode:
       <input type="text" id="kw_unicode" placeholder="e.g. u2ee22">
       <button onclick="searchUnicode()">go</button>
@@ -159,12 +165,14 @@
       const url = `https://${lang}.${project}.org/wiki/Special:PrefixIndex/User:${encodeURIComponent(user)}`;
       window.open(url, "_blank");
     }
+
     function searchIa() {
       const word = document.getElementById("kw_ia").value.trim();
       if (!word) return;
       const url = `https://archive.org/details/${word}`;
       window.open(url, "_blank");
     }
+
     function searchLogeion() {
       const word = document.getElementById("kw_logeion").value.trim();
       if (!word) return;
@@ -237,6 +245,13 @@
       const word = document.getElementById("kw_ndl").value.trim();
       if (!word) return;
       const url = `https://dl.ndl.go.jp/pid/${word}`;
+      window.open(url, "_blank");
+    }
+
+    function searchKtb() {
+      const word = document.getElementById("kw_ktb").value.trim();
+      if (!word) return;
+      const url = `https://kotobank.jp/search?q=${word}&t=ja`;
       window.open(url, "_blank");
     }
 
