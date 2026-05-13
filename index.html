@@ -112,6 +112,12 @@
     </label>
   </div>
   <div>
+    <label>NDL:
+      <input type="text" id="kw_ndl" placeholder="e.g. 11286406">
+      <button onclick="searchNdl()">go</button>
+    </label>
+  </div>
+  <div>
     <label>Unicode:
       <input type="text" id="kw_unicode" placeholder="e.g. u2ee22">
       <button onclick="searchUnicode()">go</button>
@@ -224,6 +230,13 @@
       const word = document.getElementById("kw_dwds").value.trim();
       if (!word) return;
       const url = `https://www.dwds.de/wb/${word}`;
+      window.open(url, "_blank");
+    }
+
+    function searchNdl() {
+      const word = document.getElementById("kw_ndl").value.trim();
+      if (!word) return;
+      const url = `https://dl.ndl.go.jp/pid/${word}`;
       window.open(url, "_blank");
     }
 
