@@ -19,6 +19,9 @@
       gap: 0.5em;
       /*margin-bottom: 0.5em; */
     }
+    #kw_ndl_page {
+      width: 30px;
+    }
   </style>
 </head>
 <body>
@@ -69,6 +72,20 @@
     </label>
   </div>
   <div>
+  <div>
+    <label>NDL:
+      <input type="text" id="kw_ndl" placeholder="e.g. 11286406">
+      <input type="text" id="kw_ndl_page" placeholder="e.g. 12">
+      <button onclick="searchNdl()">go</button>
+      <button onclick="searchNdlNext()">next</button>
+    </label>
+  </div>
+  <div>
+    <label>コトバンク:
+      <input type="text" id="kw_ktb" placeholder="e.g. 灸">
+      <button onclick="searchKtb()">go</button>
+    </label>
+  </div>
   <label>Ia:
     <input type="text" id="kw_ia" placeholder="">
     <button onclick="searchIa()">go</button>
@@ -109,18 +126,6 @@
     <label>DWDS:
       <input type="text" id="kw_dwds" placeholder="e.g. worterbuch">
       <button onclick="searchDwds()">go</button>
-    </label>
-  </div>
-  <div>
-    <label>NDL:
-      <input type="text" id="kw_ndl" placeholder="e.g. 11286406">
-      <button onclick="searchNdl()">go</button>
-    </label>
-  </div>
-  <div>
-    <label>コトバンク:
-      <input type="text" id="kw_ktb" placeholder="e.g. 灸">
-      <button onclick="searchKtb()">go</button>
     </label>
   </div>
   <div>
@@ -247,7 +252,22 @@
       const url = `https://dl.ndl.go.jp/pid/${word}`;
       window.open(url, "_blank");
     }
-
+    function searchNdlNext() {
+      const word = document.getElementById("kw_ndl").value.trim();
+      if (!word) return;
+      const url = `https://dl.ndl.go.jp/pid/${word}`;
+      window.open(url, "_blank");
+    }
+    function searchNdlNext() {
+      const word = document.getElementById("kw_ndl").value.trim();
+      if (!word) return;
+      let url = `https://lab.ndl.go.jp/dl/book/${word}`;
+      const page = document.getElementById("kw_ndl_page").value.trim();
+      if (page) {
+        url += `?page=${page}`;
+      }
+      window.open(url, "_blank");
+    }
     function searchKtb() {
       const word = document.getElementById("kw_ktb").value.trim();
       if (!word) return;
